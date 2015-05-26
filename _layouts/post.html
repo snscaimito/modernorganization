@@ -1,0 +1,67 @@
+<html>
+{% include head.html %}
+
+<body>
+	<div class="container">
+	{% include navbar.html %}
+	<h1>{{ page.title }}</h1>
+	
+	{{ content }}
+	<p>&nbsp;</p>
+	
+	<p><a href="{{ page.source_url }}"><strong>Read the full article at its source ...</strong></a></p>
+
+	<p>&nbsp;</p>
+	<center>
+	<table>
+		<tr>
+			<td rowspan="4"><img id="personImage" src=""/></td>
+			<td><span id="personName"/></td>
+		</tr>
+		<tr>
+			<td><span id="personPhone"/></td>
+		</tr>
+		<tr>
+			<td><a id="personMailUrl"><span id="personMail"/></a></td>
+		</tr>
+		<tr>
+			<td><a id="personUrl"><span id="personUrlTitle"/></a></td>
+		</tr>
+		<tr>
+			<td colspan="2"><span id="personAbout"/></td>
+		</tr>
+		<tr>
+			<td colspan="2"><span id="personLocation"/></td>
+		</tr>
+	</table>
+	</center>
+
+
+	<script type="text/javascript">
+	function fillProfile( profile ) {
+	    $('#personName').text(profile.entry[0].displayName);
+		$('#personImage').attr('src', profile.entry[0].thumbnailUrl) ;
+	    $('#personPhone').text(profile.entry[0].phoneNumbers[0].value);
+	    $('#personAbout').html(profile.entry[0].aboutMe);
+	    $('#personLocation').html(profile.entry[0].currentLocation);
+
+	    $('#personMail').text(profile.entry[0].emails[0].value);
+	    $('#personMailUrl').attr('href', 'mailto:' + profile.entry[0].emails[0].value);
+
+	
+	    $('#personUrlTitle').text(profile.entry[0].urls[0].title);
+	    $('#personUrl').attr('href', profile.entry[0].urls[0].value);
+	}
+	</script>
+ 
+	 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+	 <script>
+     	var personHash = CryptoJS.MD5("{{ page.author }}");
+		var url = "https://www.gravatar.com/" + personHash + ".json?callback=fillProfile" ;
+		
+		$.getScript(url) ;
+	 </script>
+ 
+	</div>
+</body>
+</html>

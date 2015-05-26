@@ -1,0 +1,23 @@
+
+{% for post in site.posts %}
+<table>
+<tr>
+	<td align="center" nowrap>
+		<img id="personImage{{ forloop.index }}" src="#"/><br/>
+		<span id="personName{{ forloop.index }}"/>
+	</td>
+	<td>
+		<p>{{ post.title }}</p>
+		<p>{{ post.content }} <a href="{{ post.url }}">More ...</a></p>
+	</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+function fillProfile{{ forloop.index }}( profile ) {
+	$('#personImage{{ forloop.index }}').attr('src', profile.entry[0].thumbnailUrl) ;
+    $('#personName{{ forloop.index }}').text(profile.entry[0].displayName);
+}
+</script>
+<script src="{{ post.gravatar }}.json?callback=fillProfile{{ forloop.index }}" type="text/javascript"></script>
+{% endfor %}
